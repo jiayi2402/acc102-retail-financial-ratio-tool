@@ -21,8 +21,11 @@ df = pd.read_csv("cleaned_ratios.csv")
 name_map = {
     "BEST BUY CO INC": "Best Buy",
     "COSTCO WHOLESALE CORP": "Costco",
+    "DOLLAR GENERAL CORP": "Dollar General",
+    "DOLLAR TREE INC": "Dollar Tree",
     "HOME DEPOT INC": "Home Depot",
     "KROGER CO": "Kroger",
+    "ROSS STORES INC": "Ross Stores",
     "TARGET CORP": "Target",
     "WALMART INC": "Walmart"
 }
@@ -38,8 +41,8 @@ df["company_short"] = df["company_short"].fillna(df["company"])
 st.title("Retail Financial Ratio Comparison Tool")
 st.write(
     """
-    This interactive tool compares selected listed retail companies using key accounting ratios.
-    It helps users examine profitability, liquidity, leverage, and efficiency across different firms and over time.
+    This interactive tool compares the financial performance of a final sample of nine listed retail companies over the 2016–2025 period.
+    It is designed to help users explore profitability, liquidity, leverage, and efficiency through ratio trends, latest-year comparison, and summary insights.
     """
 )
 
@@ -218,8 +221,11 @@ st.dataframe(display_df, use_container_width=True)
 st.subheader("Notes and Limitations")
 st.write(
     """
-    This tool compares a selected group of retail companies using annual accounting ratios.
-    The results should be interpreted with caution, since financial ratios do not capture all business differences,
-    strategic choices, or accounting policy variations.
+    This tool compares a final sample of nine listed retail companies using annual accounting ratios over the 2016–2025 period.
+    The results should be interpreted with caution, because financial ratios do not fully capture business strategy,
+    market conditions, competitive position, management quality, or differences in accounting policy.
+    In addition, some ratios, especially the debt-to-equity ratio, may become difficult to interpret when equity values
+    fluctuate sharply. The tool is therefore intended to support comparison and interpretation, rather than provide a
+    complete measure of overall company performance.
     """
 )

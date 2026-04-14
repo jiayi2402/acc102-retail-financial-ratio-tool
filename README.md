@@ -1,20 +1,16 @@
 # Retail Financial Ratio Comparison Tool
 
 ## 1. Problem & User
-This project builds an interactive Streamlit tool to compare the financial performance of selected listed retail companies. The main analytical problem is:
-
-**How do selected retail companies differ in profitability, liquidity, leverage, and efficiency over time?**
-
-The tool is designed for accounting students, finance beginners, and users who want a simple and interactive way to compare company performance across multiple financial dimensions.
+This project builds an interactive Streamlit tool to compare the financial performance of selected listed retail companies. It is designed for accounting students, finance beginners, and users who want a simple way to compare profitability, liquidity, leverage, and efficiency across firms over time.
 
 ## 2. Data
 - **Source:** WRDS
-- **Access date:** 2025-04-09
+- **Access date:** 2026-04-14
 - **Industry:** Retail
-- **Candidate companies:** Walmart, Costco, Target, Kroger, Best Buy, Home Depot
-- **Time period:** 2020–2024
+- **Final sample companies:** Best Buy, Costco, Dollar General, Dollar Tree, Home Depot, Kroger, Ross Stores, Target, and Walmart
+- **Time period:** 2016–2025
 
-The project uses annual financial statement data and retains the key raw variables required for ratio calculation, including:
+The project uses annual financial statement data and retains the key variables required for ratio calculation, including:
 - revenue
 - net income
 - total assets
@@ -28,78 +24,43 @@ This project uses Python to:
 1. extract annual financial statement data from WRDS  
 2. clean and prepare the dataset  
 3. calculate five key accounting ratios  
-4. compare selected companies through tables and charts  
+4. generate summary tables and visual comparisons  
 5. build an interactive Streamlit tool for user exploration  
 
-The five ratios used in the project are:
-- **ROA**
-- **Net Profit Margin**
-- **Current Ratio**
-- **Debt-to-Equity Ratio**
-- **Asset Turnover**
-
-These ratios are used to compare company performance across four dimensions:
-- profitability
-- liquidity
-- leverage
-- efficiency
+The five ratios used are:
+- ROA
+- Net Profit Margin
+- Current Ratio
+- Debt-to-Equity Ratio
+- Asset Turnover
 
 ## 4. Key Findings
-The analysis shows that the selected retail companies differ clearly across financial dimensions.
-
-- **Home Depot** shows the strongest profitability based on ROA and net profit margin.
-- **Costco** shows the strongest asset-use efficiency and appears to be one of the most balanced firms overall.
+- **Home Depot** is the strongest long-run profitability performer based on ROA and net profit margin.
+- **Ross Stores** appears to be one of the most balanced firms overall, combining strong profitability, strong liquidity, and relatively low leverage.
+- **Costco** is the strongest efficiency performer based on asset turnover.
 - **Walmart** appears relatively stable across the selected period.
-- **Kroger** generally records weaker profitability and liquidity, but relatively stronger efficiency.
-- The results suggest that no single ratio is sufficient to evaluate overall company performance.
+- The results show that no single ratio is sufficient to evaluate overall company performance.
 
-Overall, the project shows that a multi-ratio approach provides a more balanced and informative comparison than relying on only one indicator.
+## 5. How to Run
+1. Install the required packages:  
+   `python3 -m pip install -r requirements.txt`
 
-## 5. Product Features
-The Streamlit tool allows users to:
-- select up to three companies
-- choose a year range
-- choose one or more financial ratios
-- view ratio trend charts
-- compare the latest-year results
-- read automatically generated insight summaries
-- view the underlying processed ratio dataset
+2. Run the Streamlit app:  
+   `python3 -m streamlit run app.py`
 
-## 6. Project Files
-- `financial_ratio_analysis.ipynb` – Jupyter notebook showing the full analytical workflow
-- `app.py` – Streamlit application file
-- `cleaned_ratios.csv` – processed dataset used by the app
-- `requirements.txt` – required Python packages
-- `README.md` – project description and instructions
+3. Open the local app link provided in the terminal, usually:  
+   `http://localhost:8501`
 
-## 7. How to Run
-### Step 1: Install the required packages
-`python3 -m pip install -r requirements.txt`
+## 6. Product Link / Demo
+- **Tool link:** https://acc102-retail-financial-ratio-tool.streamlit.app
+- **Demo video:** [Add your demo video link here]
 
-### Step 2: Run the Streamlit app
-`python3 -m streamlit run app.py`
-
-### Step 3: Open the local app link
-After running the command above, Streamlit will provide a local URL in the terminal, usually something like:
-`http://localhost:8501`
-
-## 8. Limitations & Next Steps
-This project focuses on a selected group of listed retail companies and a limited set of accounting ratios. Financial ratios are useful summary indicators, but they do not fully capture:
-- business strategy
-- market conditions
-- differences in accounting policy
-- management quality
-- competitive position
-
-In addition, the project uses annual data, which is suitable for trend comparison but may not fully reflect short-term changes within each year.
+## 7. Limitations & Next Steps
+This project focuses on one industry, a limited sample of firms, and a selected set of accounting ratios. Financial ratios are useful summary indicators, but they do not fully capture business strategy, market conditions, accounting policy differences, or management quality.
 
 Possible future improvements include:
-- adding more industries
-- including more companies
+- expanding the company sample
+- including more retail sub-segments or additional industries
 - adding more financial ratios
 - improving the app layout and interactivity
 - adding downloadable comparison reports
-
-## 9. Product Link / Demo
-- **Tool link:** https://acc102-retail-financial-ratio-tool.streamlit.app
-- **Demo video:** [Add your demo video link here]
