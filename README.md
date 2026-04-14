@@ -101,5 +101,5 @@ Possible future improvements include:
 - adding downloadable comparison reports
 
 ## 9. Product Link / Demo
-- **Tool link:** [Add your tool link here]
+- **Tool link:** https://acc102-retail-financial-ratio-tool.streamlit.app
 - **Demo video:** [Add your demo video link here]
