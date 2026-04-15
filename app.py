@@ -2,15 +2,20 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Retail Financial Ratio Comparison Tool", layout="wide")
+# ---------------------------
+# Page configuration
+# ---------------------------
+st.set_page_config(
+    page_title="Retail Financial Ratio Comparison Tool",
+    layout="wide"
+)
 
 # ---------------------------
 # Load data
 # ---------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("cleaned_ratios.csv")
-    return df
+    return pd.read_csv("cleaned_ratios.csv")
 
 df = load_data()
 
@@ -32,7 +37,7 @@ name_map = {
 df["company_short"] = df["company"].map(name_map).fillna(df["company"])
 
 # ---------------------------
-# Ratio display names
+# Ratio label mapping
 # ---------------------------
 ratio_name_map = {
     "roa": "ROA",
@@ -45,14 +50,14 @@ ratio_name_map = {
 ratio_options = list(ratio_name_map.keys())
 
 # ---------------------------
-# Sidebar controls
+# Sidebar
 # ---------------------------
 st.sidebar.header("Select Comparison Options")
-st.sidebar.write("Choose up to three companies")
+st.sidebar.caption("Choose up to three companies for comparison.")
 
 all_companies = sorted(df["company_short"].unique().tolist())
 
-default_companies = ["Best Buy", "Costco", "Dollar General"]
+default_companies = ["Best Buy", "Costco", "Home Depot"]
 default_companies = [c for c in default_companies if c in all_companies]
 
 selected_companies = st.sidebar.multiselect(
@@ -60,9 +65,6 @@ selected_companies = st.sidebar.multiselect(
     options=all_companies,
     default=default_companies
 )
-
-if len(selected_companies) > 3:
-    st.sidebar.warning("Please select up to three companies only.")
 
 min_year = int(df["fiscal_year"].min())
 max_year = int(df["fiscal_year"].max())
@@ -90,14 +92,37 @@ filtered = df[
 ].copy()
 
 # ---------------------------
-# Main title and intro
+# Main title and introduction
 # ---------------------------
 st.title("Retail Financial Ratio Comparison Tool")
 st.write(
     """
     This interactive tool compares the financial performance of a final sample of nine listed retail companies
-    over the 2016–2025 period. It is designed to help users explore profitability, liquidity, leverage,
-    and efficiency through ratio trends, latest-year comparison, and summary insights.
+    over the 2016–2025 period. It helps users explore profitability, liquidity, leverage, and efficiency
+    through ratio trends, latest-year comparison, and summary insights.
+    """
+)
+
+# ---------------------------
+# How to use
+# ---------------------------
+st.subheader("How to Use This Tool")
+st.write(
+    """
+    Select up to three companies from the sidebar, choose a year range, and select one or more financial ratios.
+    The trend charts show how each ratio changes over time, while the latest-year comparison table and insight summary
+    help users interpret the most recent results more quickly.
+    """
+)
+
+# ---------------------------
+# Data scope
+# ---------------------------
+st.subheader("Data Scope")
+st.write(
+    """
+    The tool uses annual financial statement data from WRDS for a final sample of nine listed retail companies
+    over the 2016–2025 period.
     """
 )
 
@@ -113,7 +138,7 @@ st.write(
 )
 
 # ---------------------------
-# Guard clauses
+# Validation checks
 # ---------------------------
 if len(selected_companies) == 0:
     st.warning("Please select at least one company.")
@@ -128,33 +153,36 @@ if len(selected_ratios) == 0:
     st.stop()
 
 if filtered.empty:
-    st.warning("No data available for the selected companies and year range.")
+    st.warning("No data are available for the selected companies and year range.")
     st.stop()
 
 # ---------------------------
-# Trend charts
+# Ratio trends
 # ---------------------------
 st.subheader("Ratio Trends Over Time")
+st.write(
+    "These charts help users compare how each selected ratio changes over time across the chosen companies."
+)
 
 years = sorted(filtered["fiscal_year"].unique())
 
 for ratio in selected_ratios:
-    plt.figure(figsize=(8, 5))
+    fig, ax = plt.subplots(figsize=(8, 5))
 
     for company in filtered["company_short"].unique():
         temp = filtered[filtered["company_short"] == company]
-        plt.plot(temp["fiscal_year"], temp[ratio], marker="o", label=company)
+        ax.plot(temp["fiscal_year"], temp[ratio], marker="o", label=company)
 
-    plt.gca().set_xticks(years)
-    plt.gca().set_xticklabels([str(int(y)) for y in years])
+    ax.set_xticks(years)
+    ax.set_xticklabels([str(int(y)) for y in years])
+    ax.set_title(f"{ratio_name_map[ratio]} Trend")
+    ax.set_xlabel("Fiscal Year")
+    ax.set_ylabel(ratio_name_map[ratio])
+    ax.legend()
+    ax.grid(True)
 
-    plt.title(f"{ratio_name_map[ratio]} Trend")
-    plt.xlabel("Fiscal Year")
-    plt.ylabel(ratio_name_map[ratio])
-    plt.legend()
-    plt.grid(True)
-    st.pyplot(plt)
-    plt.close()
+    st.pyplot(fig)
+    plt.close(fig)
 
 # ---------------------------
 # Latest-year comparison
@@ -164,12 +192,17 @@ st.subheader("Latest-Year Comparison")
 latest_year = int(filtered["fiscal_year"].max())
 latest_df = filtered[filtered["fiscal_year"] == latest_year].copy()
 
-st.write(f"Comparison for the latest year in the selected range: **{latest_year}**")
+st.write(
+    f"This table compares the selected companies in the most recent year within the chosen range: **{latest_year}**."
+)
 
 latest_cols = ["company_short"] + selected_ratios
 latest_comparison = latest_df[latest_cols].copy()
 latest_comparison = latest_comparison.rename(columns={"company_short": "Company"})
 latest_comparison[selected_ratios] = latest_comparison[selected_ratios].round(4)
+
+# Rename ratio columns for display
+latest_comparison = latest_comparison.rename(columns=ratio_name_map)
 
 st.dataframe(latest_comparison, use_container_width=True)
 
@@ -177,51 +210,64 @@ st.dataframe(latest_comparison, use_container_width=True)
 # Insight summary
 # ---------------------------
 st.subheader("Insight Summary")
+st.write(
+    "The summary below highlights the strongest observations in the selected view and gives a brief interpretation of what they may imply."
+)
 
 summary_points = []
 
-# Profitability
 if "roa" in selected_ratios:
     top_roa = latest_df.loc[latest_df["roa"].idxmax()]
     summary_points.append(
-        f"**{top_roa['company_short']}** has the highest ROA in {latest_year}."
+        f"**{top_roa['company_short']}** has the highest ROA in {latest_year}, suggesting relatively strong profitability in relation to total assets."
     )
 
 if "net_profit_margin" in selected_ratios:
     top_npm = latest_df.loc[latest_df["net_profit_margin"].idxmax()]
     summary_points.append(
-        f"**{top_npm['company_short']}** has the highest net profit margin in {latest_year}."
+        f"**{top_npm['company_short']}** has the highest net profit margin in {latest_year}, indicating relatively strong earnings performance relative to sales."
     )
 
-# Liquidity
 if "current_ratio" in selected_ratios:
     top_cr = latest_df.loc[latest_df["current_ratio"].idxmax()]
     summary_points.append(
-        f"**{top_cr['company_short']}** shows the strongest current ratio in {latest_year}."
+        f"**{top_cr['company_short']}** shows the strongest current ratio in {latest_year}, indicating a relatively stronger short-term liquidity position."
     )
 
-# Leverage
 if "debt_to_equity" in selected_ratios:
     low_de = latest_df.loc[latest_df["debt_to_equity"].idxmin()]
+    high_de = latest_df.loc[latest_df["debt_to_equity"].idxmax()]
+
     summary_points.append(
-        f"**{low_de['company_short']}** has the lowest debt-to-equity ratio in {latest_year}, suggesting relatively lower leverage."
+        f"**{low_de['company_short']}** has the lowest debt-to-equity ratio in {latest_year}, suggesting relatively lower leverage than the other selected firms."
     )
 
-# Efficiency
+    if len(latest_df) > 1:
+        summary_points.append(
+            f"**{high_de['company_short']}** has the highest debt-to-equity ratio in {latest_year}, which may indicate heavier reliance on leveraged financing and should be interpreted with caution."
+        )
+
 if "asset_turnover" in selected_ratios:
     top_at = latest_df.loc[latest_df["asset_turnover"].idxmax()]
     summary_points.append(
-        f"**{top_at['company_short']}** shows the highest asset turnover in {latest_year}."
+        f"**{top_at['company_short']}** shows the highest asset turnover in {latest_year}, suggesting relatively strong efficiency in using assets to generate sales."
     )
 
-if summary_points:
-    for point in summary_points:
-        st.markdown(f"- {point}")
+if len(selected_ratios) >= 2:
+    summary_points.append(
+        "These results should be interpreted jointly, because a company that performs strongly in one ratio may appear weaker in another."
+    )
+
+for point in summary_points:
+    st.markdown(f"- {point}")
 
 # ---------------------------
 # Underlying ratio data
 # ---------------------------
 st.subheader("Underlying Ratio Data")
+st.write(
+    "The table below shows the processed ratio data behind the current selection."
+)
 
 display_cols = [
     "company_short",
@@ -234,7 +280,7 @@ display_cols = [
 ]
 
 display_df = filtered[display_cols].copy()
-display_df = display_df.rename(columns={"company_short": "Company"})
+display_df = display_df.rename(columns={"company_short": "Company", "fiscal_year": "Fiscal Year"})
 display_df[[
     "roa",
     "net_profit_margin",
@@ -249,6 +295,8 @@ display_df[[
     "asset_turnover"
 ]].round(4)
 
+display_df = display_df.rename(columns=ratio_name_map)
+
 st.dataframe(display_df, use_container_width=True)
 
 # ---------------------------
@@ -261,7 +309,11 @@ st.write(
     The results should be interpreted with caution, because financial ratios do not fully capture business strategy,
     market conditions, competitive position, management quality, or differences in accounting policy.
     In addition, some ratios, especially the debt-to-equity ratio, may become difficult to interpret when equity values
-    fluctuate sharply. The tool is therefore intended to support comparison and interpretation, rather than provide a
-    complete measure of overall company performance.
+    fluctuate sharply. The tool is intended to support comparison and interpretation rather than provide a complete measure
+    of overall company performance.
     """
+)
+
+st.write(
+    "This tool is intended for educational comparison and interpretation rather than investment or professional advisory use."
 )
