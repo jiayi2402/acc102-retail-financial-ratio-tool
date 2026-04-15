@@ -66,11 +66,11 @@ Please make sure the following files are in the same project folder:
 - `requirements.txt`
 - `cleaned_ratios.csv`
 
-Then run the app locally.
+Then open Terminal (macOS) or Command Prompt / PowerShell (Windows), and move to the project folder that contains `app.py`.
 
 ### macOS
 1. Open Terminal and move to the project folder  
-   `cd /path/to/your/project/folder`
+   Example: `cd ~/Downloads/acc102-retail-financial-ratio-tool`
 
 2. Install the required packages  
    `python3 -m pip install -r requirements.txt`
@@ -83,7 +83,7 @@ Then run the app locally.
 
 ### Windows
 1. Open Command Prompt or PowerShell and move to the project folder  
-   `cd path\to\your\project\folder`
+   Example: `cd path\to\acc102-retail-financial-ratio-tool`
 
 2. Install the required packages  
    `python -m pip install -r requirements.txt`
