@@ -96,8 +96,9 @@ If you use the GitHub web download option, click **Code → Download ZIP**, then
 
 ## 7. Repository / Product Link / Demo
 - **Project repository link:** https://github.com/jiayi2402/acc102-retail-financial-ratio-tool
+- **Demo Video (Mediasite):** https://video.xjtlu.edu.cn/Mediasite/Channel/556fdc2c32b340f58d12b8179e0284435f/headless/watch/cd793b8756ba479bac4385f0453f50141d
+- **Backup Demo Video (Bilibili):** https://www.bilibili.com/video/BV1iSoFBMEZx/?share_source=copy_web&vd_source=35302a6845b0d212c0eebd433b419863
 - **Optional online demo link:** https://acc102-retail-financial-ratio-tool.streamlit.app
-- **Demo video:** https://www.bilibili.com/video/BV1iSoFBMEZx/?share_source=copy_web&vd_source=35302a6845b0d212c0eebd433b419863
 
 ## 8. Limitations & Next Steps
 This project focuses on one industry, a limited sample of firms, and a selected set of accounting ratios. Financial ratios are useful summary indicators, but they do not fully capture business strategy, market conditions, accounting policy differences, management quality, or competitive position.
