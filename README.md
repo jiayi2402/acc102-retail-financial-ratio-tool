@@ -96,7 +96,7 @@ If you use the GitHub web download option, click **Code → Download ZIP**, then
 
 ## 7. Repository / Product Link / Demo
 - **Project repository link:** https://github.com/jiayi2402/acc102-retail-financial-ratio-tool
-- **Demo Video (Mediasite):** https://video.xjtlu.edu.cn/Mediasite/Channel/556fdc2c32b340f58d12b8179e0284435f/headless/watch/cd793b8756ba479bac4385f0453f50141d
+- **Demo Video (Mediasite):** https://video.xjtlu.edu.cn/Mediasite/Channel/556fdc2c32b340f58d12b8179e0284435f/headless/watch/bf1efffd01bb438c9627b3d20e4c96eb1d
 - **Backup Demo Video (Bilibili):** https://www.bilibili.com/video/BV1iSoFBMEZx/?share_source=copy_web&vd_source=35302a6845b0d212c0eebd433b419863
 - **Optional online demo link:** https://acc102-retail-financial-ratio-tool.streamlit.app
 
