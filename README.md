@@ -59,14 +59,14 @@ Overall, the project helps users identify whether a firm is stronger in profitab
 - `README.md` – project overview and running instructions
 
 ## 6. How to Run Locally
-The user should be able to run this app locally after cloning or downloading the repository.
+The app can be run locally after cloning the repository or downloading it as a ZIP file.
 
 Please make sure the following files are in the same project folder:
 - `app.py`
 - `requirements.txt`
 - `cleaned_ratios.csv`
 
-If you use the GitHub web download option, click **Code → Download ZIP**, then extract the ZIP file before running the app.
+If you download the repository as a ZIP file, extract it first before running the app.
 
 ### macOS
 1. Open Terminal and move to the extracted project folder that contains `app.py`  
@@ -82,8 +82,8 @@ If you use the GitHub web download option, click **Code → Download ZIP**, then
    `http://localhost:8501`
 
 ### Windows
-1. Open Command Prompt or PowerShell and move to the extracted project folder that contains `app.py`  
-   Example: `cd ~/Downloads/acc102-retail-financial-ratio-tool-main`
+1. Open PowerShell and move to the extracted project folder that contains `app.py`  
+   Example: `cd $HOME\Downloads\acc102-retail-financial-ratio-tool-main`
 
 2. Install the required packages  
    `python -m pip install -r requirements.txt`
