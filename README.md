@@ -83,7 +83,7 @@ If you use the GitHub web download option, click **Code → Download ZIP**, then
 
 ### Windows
 1. Open Command Prompt or PowerShell and move to the extracted project folder that contains `app.py`  
-   Example: `cd path\to\acc102-retail-financial-ratio-tool-main`
+   Example: `cd ~/Downloads/acc102-retail-financial-ratio-tool-main`
 
 2. Install the required packages  
    `python -m pip install -r requirements.txt`
